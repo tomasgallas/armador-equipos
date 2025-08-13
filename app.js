@@ -17,10 +17,9 @@
     warning.textContent = '';
     warning.className = 'fw-bold mt-3'; // Resetea la clase de la advertencia
 
-    // Se agrega la clase 'teams-enter' para la animación de entrada
-    // Se agrega un ícono de camiseta a cada jugador
+    // Se usa 'col-6' para forzar 2 columnas en todas las pantallas, incluyendo móviles.
     teamsContainer.innerHTML =
-      `<div class="col-md-6 teams-enter">
+      `<div class="col-6 teams-enter">
         <div class="team-box">
           <h5><i class="bi bi-shield-shaded"></i> Equipo 1</h5>
           <ul id="list1" class="list-group list-group-flush">
@@ -28,7 +27,7 @@
           </ul>
         </div>
       </div>` +
-      `<div class="col-md-6 teams-enter" style="animation-delay: 0.1s;">
+      `<div class="col-6 teams-enter" style="animation-delay: 0.1s;">
         <div class="team-box">
           <h5><i class="bi bi-shield-shaded"></i> Equipo 2</h5>
           <ul id="list2" class="list-group list-group-flush">
@@ -62,12 +61,18 @@
   }
   
   btnGenerateTeams.addEventListener('click', () => {
-    // Se extrae el nombre ignorando el "1. " al inicio.
+    // Limpiamos cualquier advertencia anterior al comenzar
+    warning.textContent = '';
+    warning.className = 'fw-bold mt-3';
+
     const lines = textarea.value.trim().split('\n').map(l => l.replace(/^\d+\.\s*/, '').trim()).filter(Boolean);
     
-    // Permitimos equipos impares, pero mostramos advertencia
+    // --- ESTA ES LA PARTE CORREGIDA ---
     if (lines.length < 2 || lines.length > 22) {
-      return alert('La cantidad de jugadores debe ser entre 2 y 22.');
+      // En lugar de alert(), usamos nuestro div de advertencia
+      warning.textContent = 'La cantidad de jugadores debe ser entre 2 y 22.';
+      warning.className = 'warning-text fw-bold mt-3';
+      return; // Detenemos la función aquí
     }
     
     teams = splitTeams(lines);

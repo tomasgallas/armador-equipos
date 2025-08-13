@@ -1,195 +1,179 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FUTBOL PAPA</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  
-  <style>
-    /* --- Paleta de Colores MODO OSCURO --- */
-    :root {
-      --dark-bg: #1a1a1a;
-      --card-bg: #2c2c2c;
-      --primary-accent: #00ff87; /* Verde Eléctrico */
-      --primary-accent-darker: #00cc6c;
-      --text-light: #f0f0f0;
-      --text-muted: #a0a0a0;
-      --border-color: rgba(255, 255, 255, 0.1);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FUTBOL PAPA</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        /* --- Paleta de Colores MODO OSCURO --- */
+        :root {
+            --dark-bg: #1a1a1a;
+            --card-bg: #2c2c2c;
+            --primary-accent: #00ff87; /* Verde Eléctrico */
+            --primary-accent-darker: #00cc6c;
+            --text-light: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
 
-    body {
-      /* La URL sigue apuntando a tu archivo local */
-      background-image: url('img/messi-maradona.jpg');
-      
-      /* --- EL CAMBIO CLAVE ESTÁ ACÁ --- */
-      /* Le damos un tamaño del 90% del contenedor. ¡Podés jugar con este valor! */
-      background-size: 95%; 
+        body {
+            background-image: url('img/messi-maradona11.jpg');
+            background-size: 100%; 
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed; 
+            background-color: var(--dark-bg);
+            font-family: 'Oswald', sans-serif;
+            color: var(--text-light);
+        }
 
-      /* El resto de las propiedades son importantes y quedan igual */
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed; 
-      background-color: var(--dark-bg); /* Rellena el 10% restante */
-      
-      font-family: 'Oswald', sans-serif;
-      color: var(--text-light);
-    }
+        .main-card {
+            background-color: rgba(44, 44, 44, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
 
-    /* --- Tarjeta principal con efecto "vidrio esmerilado" --- */
-    .main-card {
-      /* Fondo semi-transparente para que se vea la imagen de atrás */
-      background-color: rgba(44, 44, 44, 0.75);
+        .title {
+            font-weight: 700;
+            color: var(--primary-accent);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
+        }
 
-      /* El efecto de desenfoque (blur) */
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px); /* Para compatibilidad con Safari */
+        @media (min-width: 768px) {
+            .title {
+                font-size: 3.5rem;
+            }
+            .main-card {
+                padding: 2.5rem;
+            }
+        }
 
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
+        .form-label {
+            color: var(--text-light);
+            font-weight: 400;
+        }
+        .form-control {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            border-color: var(--border-color);
+            resize: none;
+        }
+        .form-control:focus {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 0.25rem rgba(0, 255, 135, 0.25);
+        }
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+        .btn-generate {
+            background-color: var(--primary-accent);
+            border-color: var(--primary-accent);
+            color: var(--dark-bg);
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-generate:hover {
+            background-color: var(--primary-accent-darker);
+            border-color: var(--primary-accent-darker);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+        }
 
-    .title {
-      font-weight: 700;
-      color: var(--primary-accent);
-      font-size: 2.5rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
-    }
+        .team-box {
+          background-color: var(--dark-bg);
+          border: 1px solid var(--border-color);
+          border-radius: 0.5rem;
+          padding: 1.5rem;
+          height: 100%;
+          text-align: center; /* <-- AÑADÍ ESTA LÍNEA PARA CENTRAR TODO */
+        }
+        .team-box h5 {
+            color: var(--primary-accent);
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-accent);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
 
-    /* Ajustes para Responsividad */
-    @media (min-width: 768px) {
-      .title {
-        font-size: 3.5rem;
-      }
-      .main-card {
-        padding: 2.5rem;
-      }
-    }
+        .list-group-item {
+            background-color: transparent !important;
+            color: var(--text-light) !important;
+            border: none !important;
+            padding: 0.75rem 0.25rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .list-group-item:hover {
+            color: var(--primary-accent) !important;
+        }
+        .list-group-item .bi {
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+        .list-group-item:hover .bi {
+            color: var(--primary-accent);
+        }
 
-    /* --- Formularios y Botones --- */
-    .form-label {
-      color: var(--text-light);
-      font-weight: 400;
-    }
-    .form-control {
-      background-color: var(--dark-bg);
-      color: var(--text-light);
-      border-color: var(--border-color);
-      resize: none;
-    }
-    .form-control:focus {
-      background-color: var(--dark-bg);
-      color: var(--text-light);
-      border-color: var(--primary-accent);
-      box-shadow: 0 0 0 0.25rem rgba(0, 255, 135, 0.25);
-    }
-    .form-control::placeholder {
-      color: var(--text-muted);
-    }
-    .btn-generate {
-      background-color: var(--primary-accent);
-      border-color: var(--primary-accent);
-      color: var(--dark-bg);
-      font-weight: 700;
-      text-transform: uppercase;
-      transition: all 0.2s ease-in-out;
-    }
-    .btn-generate:hover {
-      background-color: var(--primary-accent-darker);
-      border-color: var(--primary-accent-darker);
-      color: var(--dark-bg);
-      transform: scale(1.05);
-    }
-
-    /* --- Cajas de Equipos --- */
-    .team-box {
-      background-color: var(--dark-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      height: 100%;
-    }
-    .team-box h5 {
-      color: var(--primary-accent);
-      font-weight: 700;
-      border-bottom: 2px solid var(--primary-accent);
-      padding-bottom: 0.75rem;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-    }
-
-    /* --- Jugadores en la lista --- */
-    .list-group-item {
-      background-color: transparent !important;
-      color: var(--text-light) !important;
-      border: none !important;
-      padding: 0.75rem 0.25rem;
-      cursor: pointer;
-      transition: color 0.2s ease;
-    }
-    .list-group-item:hover {
-      color: var(--primary-accent) !important;
-    }
-    .list-group-item .bi {
-        color: var(--text-muted);
-        transition: color 0.2s ease;
-    }
-    .list-group-item:hover .bi {
-        color: var(--primary-accent);
-    }
-
-    /* --- Animación de Entrada y Advertencia --- */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .teams-enter {
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-    .warning-text {
-        color: #ff4d4d;
-        font-weight: 700;
-        text-align: center;
-        padding: 0.5rem;
-    }
-  </style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .teams-enter {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .warning-text {
+            color: #ff4d4d;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.5rem;
+        }
+    </style>
 </head>
 <body class="p-3 p-md-4">
 
-  <div class="container">
+<div class="container">
     <div class="main-card mx-auto" style="max-width: 900px;">
-      
-      <h1 class="title text-center mb-4">
-        <i class="bi bi-shield-check"></i>FUTBOL PAPA ⚽<i class="bi bi-shield-check"></i>
-      </h1>
+        
+        <h1 class="title text-center mb-4">
+            <i class="bi bi-shield-check"></i>FUTBOL PAPA ⚽<i class="bi bi-shield-check"></i>
+        </h1>
 
-      <div class="mb-4">
-        <label for="inputList" class="form-label">PEGA LA LISTA DE JUGADORES:</label>
-        <textarea id="inputList" class="form-control" rows="6" placeholder="1. Manu&#10;2. Chipi&#10;3. Jony..."></textarea>
-      </div>
-      
-      <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
-        <button id="btnGenerateTeams" class="btn btn-generate btn-lg px-5"><i class="bi bi-lightning-charge-fill me-2"></i>Generar Equipos</button>
-        <button id="btnReshuffle" class="btn btn-outline-light btn-lg" disabled><i class="bi bi-arrow-repeat me-2"></i>Mezclar</button>
-      </div>
+        <div class="mb-4">
+            <label for="inputList" class="form-label">PEGA LA LISTA DE JUGADORES:</label>
+            <textarea id="inputList" class="form-control" rows="6" placeholder="1. Manu&#10;2. Chipi&#10;3. Jony..."></textarea>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
+            <button id="btnGenerateTeams" class="btn btn-generate btn-lg px-5"><i class="bi bi-lightning-charge-fill me-2"></i>Generar Equipos</button>
+            <button id="btnReshuffle" class="btn btn-outline-light btn-lg" disabled><i class="bi bi-arrow-repeat me-2"></i>Mezclar</button>
+        </div>
 
-      <div id="teamsContainer" class="row g-3 g-lg-4"></div>
-      <div id="warning" class="fw-bold mt-3"></div>
+        <div id="teamsContainer" class="row row-cols-2 g-3 g-lg-4"></div>
+        <div id="warning" class="fw-bold mt-3"></div>
 
     </div>
-  </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
