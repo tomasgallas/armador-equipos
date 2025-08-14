@@ -9,15 +9,14 @@
 
   function splitTeams(players) {
     const shuffled = players.sort(() => Math.random() - 0.5);
-    const half = Math.ceil(players.length / 2); // Usamos Math.ceil para manejar impares
+    const half = players.length / 2; // Ahora siempre será par
     return { team1: shuffled.slice(0, half), team2: shuffled.slice(half) };
   }
 
   function render() {
     warning.textContent = '';
-    warning.className = 'fw-bold mt-3'; // Resetea la clase de la advertencia
+    warning.className = 'fw-bold mt-3';
 
-    // Se usa 'col-6' para forzar 2 columnas en todas las pantallas, incluyendo móviles.
     teamsContainer.innerHTML =
       `<div class="col-6 teams-enter">
         <div class="team-box">
@@ -36,13 +35,11 @@
         </div>
       </div>`;
 
-    // Añadir listener de swap
     ['list1', 'list2'].forEach(id => {
       document.getElementById(id).querySelectorAll('.list-group-item').forEach(item => {
         item.addEventListener('click', () => {
           const from = id === 'list1' ? 'team1' : 'team2';
           const to = from === 'team1' ? 'team2' : 'team1';
-          // Extraer solo el nombre, ignorando el ícono
           const name = item.textContent.trim();
           teams[from] = teams[from].filter(p => p !== name);
           teams[to].push(name);
@@ -51,28 +48,26 @@
       });
     });
     
-    // Check balance
     const count1 = teams.team1.length;
     const count2 = teams.team2.length;
     if (count1 !== count2) {
       warning.textContent = '¡Cuidado! Los equipos no están balanceados.';
-      warning.className = 'warning-text fw-bold mt-3'; // Aplica el estilo de advertencia
+      warning.className = 'warning-text fw-bold mt-3';
     }
   }
   
   btnGenerateTeams.addEventListener('click', () => {
-    // Limpiamos cualquier advertencia anterior al comenzar
     warning.textContent = '';
     warning.className = 'fw-bold mt-3';
 
     const lines = textarea.value.trim().split('\n').map(l => l.replace(/^\d+\.\s*/, '').trim()).filter(Boolean);
     
-    // --- ESTA ES LA PARTE CORREGIDA ---
-    if (lines.length < 2 || lines.length > 22) {
-      // En lugar de alert(), usamos nuestro div de advertencia
-      warning.textContent = 'La cantidad de jugadores debe ser entre 2 y 22.';
+    // --- LÓGICA DE VALIDACIÓN CORREGIDA ---
+    // Ahora comprueba: Mínimo 8, máximo 22 y que sea un número par.
+    if (lines.length < 8 || lines.length > 22 || lines.length % 2 !== 0) {
+      warning.textContent = 'Se necesitan entre 8 y 22 jugadores, y la cantidad debe ser par.';
       warning.className = 'warning-text fw-bold mt-3';
-      return; // Detenemos la función aquí
+      return; 
     }
     
     teams = splitTeams(lines);
