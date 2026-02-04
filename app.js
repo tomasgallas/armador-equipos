@@ -159,7 +159,7 @@
       return `
         <div class="${colClass} teams-enter" style="animation-delay: ${index * 0.1}s;">
           <div class="team-box">
-            <h5><i class="bi bi-shield-shaded"></i> Equipo ${teamNumber}</h5>
+            <h5><i class="bi bi-shield-shaded"></i>  ${teamNumber}</h5>
             <ul class="list-group list-group-flush">
               ${teamPlayers.map(player => {
                 const isTreasurer = player === treasurer;
