@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FUTBOL PAPA</title>
+    <title>FÚTBOL PAPA</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
         }
 
         .title {
-            font-weight: 700;
+            font-weight: 500;
             color: var(--primary-accent);
             font-size: 2.5rem;
             text-transform: uppercase;
@@ -175,6 +175,52 @@
             border-radius: 0.25rem;
         }
 
+        /* --- Ajustes responsivos para móviles --- */
+        @media (max-width: 576px) {
+            .title {
+                font-size: 2rem; /* Título principal más pequeño en móvil */
+            }
+            .main-card {
+                padding: 1rem; /* Padding reducido en móvil */
+            }
+
+            /* Info del partido (Lugar, Fecha, Costo, Encargado) */
+            #teamsContainer h3 { /* Lugar (ahora h3) */
+                font-size: 1.2rem;
+            }
+            #teamsContainer h4 { /* Fecha */
+                font-size: 1.1rem;
+            }
+            #teamsContainer p { /* Costo */
+                font-size: 1.1rem;
+            }
+            #teamsContainer h5 { /* Encargado de cobrar */
+                font-size: 1rem;
+            }
+
+            /* Títulos de equipos (Equipo 1, Equipo 2, etc.) */
+            .team-box h5 {
+                font-size: 1.1rem; /* Más pequeño para los títulos de equipos */
+                padding-bottom: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Nombres de jugadores */
+            .list-group-item {
+                font-size: 0.95rem; /* Nombres de jugadores más pequeños */
+                padding: 0.5rem 0.2rem;
+            }
+
+            /* Player cards para selección de arqueros */
+            .player-card {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            #gkSelectionContainer h4 {
+                font-size: 1.3rem;
+            }
+        }
+
 
         /* --- Estilos para el enlace del portfolio (AÑADIDO) --- */
         .portfolio-link {
@@ -198,7 +244,7 @@
     <div class="main-card mx-auto" style="max-width: 900px;">
         
         <h1 class="title text-center mb-4">
-            <i class="bi bi-shield-check"></i>FUTBOL PAPA ⚽<i class="bi bi-shield-check"></i>
+            <i>FÚTBOL PAPÁ! ⚽</i>
         </h1>
 
         <div id="settingsContainer">
@@ -214,7 +260,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="inputCost" class="form-label">Costo Total del Partido</label>
-                        <input type="number" class="form-control" id="inputCost" placeholder="Ej: $70000(si es un turno), 140000(si son dos turnos">
+                        <input type="number" class="form-control" id="inputCost" placeholder="Ej: $70000(un turno), 140000(dos turnos)">
                     </div>
                     <div class="col-md-6">
                         <label for="teamCount" class="form-label">Cantidad de Equipos</label>
@@ -234,7 +280,6 @@
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
                 <button id="btnGenerateTeams" class="btn btn-generate btn-lg px-5"><i class="bi bi-lightning-charge-fill me-2"></i>Generar Equipos</button>
-                <button id="btnReshuffle" class="btn btn-outline-light btn-lg" disabled><i class="bi bi-arrow-repeat me-2"></i>Mezclar</button>
             </div>
         </div>
 

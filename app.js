@@ -12,7 +12,6 @@
   const inputCost = document.getElementById('inputCost');
   
   const btnGenerateTeams = document.getElementById('btnGenerateTeams');
-  const btnReshuffle = document.getElementById('btnReshuffle');
   const btnConfirmGK = document.getElementById('btnConfirmGK');
   
   const playerCardsContainer = document.getElementById('playerCardsContainer');
@@ -71,27 +70,21 @@
     const teamName = e.currentTarget.dataset.team;
 
     if (!playerToSwap) {
-      // 1. Primer clic: Seleccionar jugador para cambiar
       playerToSwap = { name: playerName, fromTeam: teamName };
-      renderFinalTeams(); // Re-renderizar para mostrar el jugador seleccionado
+      renderFinalTeams();
     } else {
-      // 2. Segundo clic: Realizar el intercambio
       if (playerToSwap.fromTeam === teamName) {
-        // Si se hace clic en el mismo equipo, se deselecciona
         playerToSwap = null;
       } else {
-        // Intercambiar jugadores
-        // Quitar jugadores de sus equipos originales
         teams[playerToSwap.fromTeam] = teams[playerToSwap.fromTeam].filter(p => p !== playerToSwap.name);
         teams[teamName] = teams[teamName].filter(p => p !== playerName);
         
-        // Agregar jugadores a sus nuevos equipos
         teams[playerToSwap.fromTeam].push(playerName);
         teams[teamName].push(playerToSwap.name);
         
-        playerToSwap = null; // Resetear
+        playerToSwap = null;
       }
-      renderFinalTeams(); // Re-renderizar para mostrar el cambio
+      renderFinalTeams();
     }
   }
 
@@ -145,7 +138,6 @@
   }
   
   function renderFinalTeams() {
-    // LAYOUT FIX: Generar el contenedor de la fila aquí
     const numTeams = Object.keys(teams).length;
     let colClass = 'col-6';
     if (numTeams === 3) colClass = 'col-4';
@@ -153,7 +145,16 @@
 
     const teamsHtml = Object.keys(teams).map((teamKey, index) => {
       const teamNumber = index + 1;
-      const teamPlayers = teams[teamKey].sort((a,b) => a.localeCompare(b));
+      // Nuevo ordenamiento: arqueros primero, luego resto alfabéticamente
+      const teamPlayers = teams[teamKey].sort((a, b) => {
+          const aIsGK = finalGoalkeepersUsed.includes(a);
+          const bIsGK = finalGoalkeepersUsed.includes(b);
+
+          if (aIsGK && !bIsGK) return -1; // Arquero A primero
+          if (!aIsGK && bIsGK) return 1;  // Arquero B primero
+          
+          return a.localeCompare(b); // Si ambos son o no son arqueros, ordenar alfabéticamente
+      });
       
       return `
         <div class="${colClass} teams-enter" style="animation-delay: ${index * 0.1}s;">
@@ -166,17 +167,20 @@
                 const isSelectedForSwap = playerToSwap && playerToSwap.name === player;
 
                 const treasurerStyle = isTreasurer ? 'color: var(--primary-accent); font-weight: 700;' : '';
-                const icon = isGoalkeeper ? 'bi-sunglasses' : 'bi-tshirt-fill';
                 const swapClass = isSelectedForSwap ? 'swap-selected' : '';
                 
-                return `<li class="list-group-item ${swapClass}" data-player="${player}" data-team="${teamKey}" style="${treasurerStyle}"><i class="bi ${icon} me-2"></i>${player}</li>`;
+                let iconHtml = '';
+                if (isGoalkeeper) {
+                  iconHtml = '<i class="bi bi-shield-fill me-2"></i>'; // Icono de escudo para arqueros
+                }
+
+                return `<li class="list-group-item ${swapClass}" data-player="${player}" data-team="${teamKey}" style="${treasurerStyle}">${iconHtml}${player}</li>`;
               }).join('')}
             </ul>
           </div>
         </div>`;
     }).join('');
 
-    // Encabezado del partido
     const totalCost = parseFloat(inputCost.value);
     const numPlayers = allPlayers.length;
     let costDetails = '';
@@ -188,7 +192,7 @@
     }
     const matchHeader = `
       <div class="col-12 text-center mb-4">
-        <h2 class="text-light">${inputPlace.value || 'Lugar no especificado'}</h2>
+        <h3 class="text-light">${inputPlace.value || 'Lugar no especificado'}</h3>
         <h4 class="text-light">${inputDate.value || 'Fecha no especificada'}</h4>
         <p class="text-light">${costDetails}</p>
         <h5 class="mt-3" style="color: var(--primary-accent);">
@@ -197,10 +201,8 @@
       </div>
     `;
 
-    // Unir todo y mostrarlo
     teamsContainer.innerHTML = matchHeader + `<div class="row g-3 g-lg-4">${teamsHtml}</div>`;
     
-    // Agregar event listeners para el intercambio
     document.querySelectorAll('.list-group-item').forEach(item => {
       item.addEventListener('click', handlePlayerClick);
     });
@@ -239,10 +241,9 @@
     }
 
     selectedGoalkeepers = [];
-    playerToSwap = null; // Resetear swap al generar nuevos equipos
+    playerToSwap = null;
     renderPlayerCards();
     showView('gkSelection');
-    btnReshuffle.disabled = true; // Deshabilitar reshuffle hasta confirmar equipos
   });
 
   btnConfirmGK.addEventListener('click', () => {
@@ -251,20 +252,8 @@
     teams = splitResult.teams;
     finalGoalkeepersUsed = splitResult.finalGoalkeepers;
     renderFinalTeams();
-    btnReshuffle.disabled = false;
-  });
-
-  btnReshuffle.addEventListener('click', () => {
-    if (allPlayers.length === 0) return;
-    treasurer = selectTreasurer(allPlayers);
-    const splitResult = splitTeams(allPlayers, parseInt(teamCountSelector.value, 10), selectedGoalkeepers);
-    teams = splitResult.teams;
-    finalGoalkeepersUsed = splitResult.finalGoalkeepers;
-    playerToSwap = null; // Resetear swap al mezclar
-    renderFinalTeams();
   });
   
-  // Inicializar vista al cargar la página
   showView('settings');
 
 })();
